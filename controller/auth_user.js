@@ -114,7 +114,7 @@ if (user) {
 res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":valid['errors'][0].msg});
 }
  } catch (error) {
-	  console.log(erro)
+	  console.log(error)
     res.status(400).json({"status":httpStatus.ERROR,"data":null,"message":"error"});
  }
 
