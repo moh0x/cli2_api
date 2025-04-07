@@ -71,7 +71,7 @@ if (user) {
     if (passwordMatch == true) {
         if (user.isVerified) {
             const userRet = await User.findOne({email : req.body.email},{__v:false,password:false});
-            res.status(200).json({"status":httpsStatus.SUCCESS,"data":userRet});
+            res.status(200).json({"status":httpStatus.SUCCESS,"data":userRet});
         } else {
             const userRet = await User.findOne({email : req.body.email},{__v:false,password:false});
             const verifyCode = gen(5,"0123456789");
@@ -102,19 +102,19 @@ if (user) {
             })
             await userRet.save()
             const userRetWithNewInfos = await User.findOne({email : req.body.email},{__v:false,password:false});
-              res.status(200).json({"status":httpsStatus.SUCCESS,"data":userRetWithNewInfos});
+              res.status(200).json({"status":httpStatus.SUCCESS,"data":userRetWithNewInfos});
         }
     } else {
-        res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"password not match"});
+        res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"password not match"});
     }
    } else {
-    res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":"there is no user with this email"});
+    res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this email"});
    }
 } else {
-res.status(400).json({"status":httpsStatus.FAIL,"data":null,"message":valid['errors'][0].msg});
+res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":valid['errors'][0].msg});
 }
  } catch (error) {
-    res.status(400).json({"status":httpsStatus.ERROR,"data":null,"message":"error"});
+    res.status(400).json({"status":httpStatus.ERROR,"data":null,"message":"error"});
  }
 
 }
