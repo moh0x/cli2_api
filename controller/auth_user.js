@@ -91,7 +91,7 @@ if (user) {
          
                  console.log("Email sent:", response.data);
              } catch (error) {
-                 console.error("Error sending email:", error.response?.data || error.message);
+                 console.log("Error sending email:", error.response?.data || error.message);
              }
          };
             sendEmail()
@@ -114,6 +114,7 @@ if (user) {
 res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":valid['errors'][0].msg});
 }
  } catch (error) {
+	  console.log(erro)
     res.status(400).json({"status":httpStatus.ERROR,"data":null,"message":"error"});
  }
 
