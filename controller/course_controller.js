@@ -59,6 +59,7 @@ const courses = async (req,res)=>{
       const courses = await Course.find({userId:user._id});
       res.status(200).json({"status":httpStatus.SUCCESS,"data":courses})
     } catch (error) {
+	    console.log(error);
       res.status(500).json({ error: "Internal Server Error" });
     }
 }
