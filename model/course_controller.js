@@ -5,6 +5,9 @@ const courseSchema = new mongoose.Schema(
         matricule: {
             type: String,
         },
+        chauferName: {
+            type: String,
+        },
         marque: {
             type: String,
         },
@@ -16,15 +19,28 @@ const courseSchema = new mongoose.Schema(
         kilomitrage:{
             type:String,
         },
+        priceParKilomitre:{
+            type:String,
+        },
+        priceTotal:{
+            type:String,
+        },
+        assurance:{
+            type:String,
+        },
         Depart:{
             type:String,
             required:true,
-            maxlength:10
         },
         Destination:{
-            type:Number
+            type:String,
+            required:true,
         },
         isFinished:{
+            type:Boolean,
+            default:false
+        },
+        isAccept:{
             type:Boolean,
             default:false
         },
