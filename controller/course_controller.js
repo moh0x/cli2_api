@@ -32,7 +32,7 @@ const courseInfo = async (req,res)=>{
 const courses = async (req,res)=>{
     try {
         const token = req.headers.token;
-      const user = await User.findOne({token:token},password)
+      const user = await User.findOne({token:token},{password:false})
       const courses = await Course.find({userId:user._id});
       res.status(200).json({"status":httpStatus.SUCCESS,"data":courses})
     } catch (error) {
