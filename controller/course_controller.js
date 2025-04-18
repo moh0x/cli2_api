@@ -20,6 +20,29 @@ const deleteCourse =  async (req, res) => {
 		res.status(500).json({ error: "Internal Server Error" });
 	}
 };
+const addCourse =  async (req, res) => {
+	try {
+    const{userId,Destination,Depart,assurance,priceParKilomitre,kilomitrage,phoneNumber,marque,chauferName,matricule}=req.body
+    const course = new Course({
+      userId:userId,
+      Destination:Destination,
+      Depart:Depart,
+      assurance:assurance,
+      priceParKilomitre:priceParKilomitre,
+      kilomitrage:kilomitrage,
+      phoneNumber:phoneNumber,
+      marque:marque,
+      chauferName:chauferName,
+      matricule:matricule
+    })       
+
+  await course.save();
+  res.status(200).json({"status":httpStatus.SUCCESS,"data":course})  
+	} catch (error) {
+		console.log("Error in logout controller", error.message);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
+};
 const courseInfo = async (req,res)=>{
   try {
     const courseId = req.params.id;
@@ -32,11 +55,11 @@ const courseInfo = async (req,res)=>{
 const courses = async (req,res)=>{
     try {
         const token = req.headers.token;
-      const user = await User.findOne({token:token},{password:false})
+      const user = await User.findOne({token:token},password)
       const courses = await Course.find({userId:user._id});
       res.status(200).json({"status":httpStatus.SUCCESS,"data":courses})
     } catch (error) {
       res.status(500).json({ error: "Internal Server Error" });
     }
 }
-module.exports = {deleteCourse,courseInfo,courses}
+module.exports = {deleteCourse,courseInfo,courses,addCourse}
