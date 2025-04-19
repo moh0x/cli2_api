@@ -100,7 +100,23 @@ const userInfo = async (req,res)=>{
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+const updateNotificationToken =  async (req, res) => {
+	try {
+		const token = req.headers.token;
+    const user = await User.findOne({token:token},{password:false})
+    const{tokenNotificatin} = req.body
+  await User.findByIdAndUpdate(user._id,{ 
+    $set:{
+      tokenNotificatin:tokenNotificatin
+    }
+  })
+  res.status(200).json({"status":httpStatus.SUCCESS,"data":user})  
+	} catch (error) {
+		console.log("Error in logout controller", error.message);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
+};
 
 
 
-module.exports = {signUp,login,logout,updateProfile,userInfo}
+module.exports = {signUp,login,logout,updateProfile,userInfo,updateNotificationToken}
