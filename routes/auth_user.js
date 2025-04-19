@@ -7,5 +7,6 @@ router.post('/signup',body("email"),body('password').isLength({min:8,max:50}).wi
 router.post('/login',body("phoneNumber").isNumeric().isLength({min:10,max:10}).withMessage("type valid phone number"),body('password').isLength({min:8,max:50}).withMessage('type valid password'),authController.login)
 router.post('/logout',verifyToken,authController.logout)
 router.put('/update-profile',verifyToken,authController.updateProfile)
+router.put('/update-notification',verifyToken,authController.updateNotificationToken)
 router.get('/user-info',verifyToken,authController.userInfo)
 module.exports = router
