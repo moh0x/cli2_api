@@ -48,6 +48,15 @@ const courseSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: "User",
+        },
+        longtitudeStart:{
+            type:Number
+        },
+        latitudeStart:{
+            type:Number
+        },
+        dateStartJourney:{
+            type:Date
         }
     },
     { timestamps: true }
