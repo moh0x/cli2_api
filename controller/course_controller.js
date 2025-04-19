@@ -59,8 +59,33 @@ const courses = async (req,res)=>{
       const courses = await Course.find({userId:user._id});
       res.status(200).json({"status":httpStatus.SUCCESS,"data":courses})
     } catch (error) {
-	    console.log(error);
       res.status(500).json({ error: "Internal Server Error" });
     }
 }
-module.exports = {deleteCourse,courseInfo,courses,addCourse}
+const startCourse =  async (req, res) => {
+	try {
+    const{longtitudeStart,latitudeStart,courseId}=req.body;
+    const token = req.headers.token;
+    const user = await User.findOne({token:token})
+   const course = await Course.findById(courseId);
+   if (!course) {
+    res.status(400).json({"status":httpStatus.FAIL,"data":null,"message": "Course Not Found" });
+   }  
+   if (course.userId != user._id) {
+    res.status(400).json({"status":httpStatus.FAIL,"data":null,"message": "Not Aauthorized" });
+   }    
+   await Course.findByIdAndUpdate(courseId,{
+    $set:{
+      longtitudeStart:longtitudeStart,
+      latitudeStart:latitudeStart,
+      dateStartJourney:Date.now()
+    }
+   })
+  await course.save();
+  res.status(200).json({"status":httpStatus.SUCCESS,"data":course})  
+	} catch (error) {
+		console.log("Error in start course controller", error.message);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
+};
+module.exports = {deleteCourse,courseInfo,courses,addCourse,startCourse}
