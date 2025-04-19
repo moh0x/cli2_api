@@ -69,10 +69,10 @@ const startCourse =  async (req, res) => {
     const user = await User.findOne({token:token})
    const course = await Course.findById(courseId);
    if (!course) {
-    res.status(400).json({"status":httpStatus.FAIL,"data":null,"message": "Course Not Found" });
+   return res.status(400).json({"status":httpStatus.FAIL,"data":null,"message": "Course Not Found" });
    }  
-   if (course.userId != user._id) {
-    res.status(400).json({"status":httpStatus.FAIL,"data":null,"message": "Not Aauthorized" });
+   if (course.userId != user.id) {
+   return res.status(400).json({"status":httpStatus.FAIL,"data":null,"message": "Not Aauthorized" });
    }    
    await Course.findByIdAndUpdate(courseId,{
     $set:{
