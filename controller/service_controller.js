@@ -27,7 +27,6 @@ const addService =  async (req, res) => {
     })       
 
   await service.save();
-  const user = await User.findOne({_id:userId});
   res.status(200).json({"status":httpStatus.SUCCESS,"data":service})  
     } catch (error) {
         console.log("Error in service add controller", error.message);
