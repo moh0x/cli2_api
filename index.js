@@ -9,8 +9,14 @@ const userRoute = require('./routes/auth_user')
 app.use('/api/auth/',userRoute)
 const courseRoute = require('./routes/course_route')
 app.use('/api/course/',courseRoute)
+const serviceRoute = require('./routes/service_route')
+app.use('/api/service/',serviceRoute)
 app.listen(port,async()=>{
     console.log('connected');  
     await db.connectDb()
 })
 require('dotenv').config();
+
+
+
+
