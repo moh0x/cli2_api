@@ -76,14 +76,16 @@ const updateProfile =  async (req, res) => {
 	try {
 		const token = req.headers.token;
     const user = await User.findOne({token:token},{password:false})
-    const{logtitude,latitude} = req.body
+    const{logtitude,latitude,isOnline,status} = req.body
   await User.findByIdAndUpdate(user._id,{ 
     $set:{
       logtitude:logtitude,
       latitude:latitude,
-      isOnline:true
+      isOnline:isOnline ?? user.isOnline,
+      status:status ?? user.status
     }
   })
+  await user.save()
   res.status(200).json({"status":httpStatus.SUCCESS,"data":user})  
 	} catch (error) {
 		console.log("Error in logout controller", error.message);
