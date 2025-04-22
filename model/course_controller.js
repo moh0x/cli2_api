@@ -57,6 +57,21 @@ const courseSchema = new mongoose.Schema(
         },
         dateStartJourney:{
             type:Date
+        },
+        longtitudeEnd:{
+            type:Number
+        },
+        latitudeEnd:{
+            type:Number
+        },
+        dateEndJourney:{
+            type:Date
+        },
+        kilomitragePaid:{
+            type:String
+        },
+        cartGrisImage:{
+            type:String
         }
     },
     { timestamps: true }
