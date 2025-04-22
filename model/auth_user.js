@@ -42,6 +42,11 @@ const userSchema = new mongoose.Schema(
 		},
 		tokenNotificatin:{
 			type:String
+		},
+		status:{
+			type:String,
+			enum:['offline','driving','online'],
+			default:'offline'
 		}
 	},
 	{ timestamps: true }
