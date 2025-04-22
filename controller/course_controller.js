@@ -5,22 +5,7 @@ const {validationResult} = require('express-validator')
 const { Course } = require('../model/course_controller')
 const { User } = require('../model/auth_user')
 const cloudinary=require( "cloudinary").v2;
-const {initializeApp} = require('firebase/app')
-var admin = require("firebase-admin");
-var serviceAccount = require("../utility/cli2-19164-firebase-adminsdk-fbsvc-4f856afab6.json");
 
-const firebaseConfig = admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-
-const app = initializeApp(firebaseConfig);
- async function sendNotification (token,title,body){
-  console.log(token);
-  
-  const message = {notification:{title:title,body:body,},token:token}
-  admin.messaging().send(message);
-  
-  }
 const deleteCourse =  async (req, res) => {
 	try {
     const course = await Course.findOne({_id:req.body._id})         
@@ -53,8 +38,6 @@ const addCourse =  async (req, res) => {
 
   await course.save();
   const user = await User.findOne({_id:userId});
-  
- await  sendNotification(user.tokenNotificatin,"رحلة جديدة","new Course For You").then(()=>console.log('ddd')).catch((e)=>console.log(e))
   res.status(200).json({"status":httpStatus.SUCCESS,"data":course})  
 	} catch (error) {
 		console.log("Error in logout controller", error.message);
