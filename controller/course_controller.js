@@ -108,17 +108,13 @@ const finishCourse =  async (req, res) => {
    if (course.userId != user.id) {
    return res.status(400).json({"status":httpStatus.FAIL,"data":null,"message": "Not Aauthorized" });
    }   
-   if (!profilePic) {
-    return res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"profilePic is required"})
-  } 
-  const uploadRespone =  await cloudinary.uploader.upload(profilePic)
    await Course.findByIdAndUpdate(courseId,{
     $set:{
       longtitudeEnd:longtitudeEnd,
       latitudeEnd:latitudeEnd,
       dateEndJourney:Date.now(),
       kilomitragePaid:kilomitragePaid,
-      cartGrisImage:uploadRespone.secure_url,
+      cartGrisImage:cartGrisImage,
       priceParKilomitre:priceParKilomitre,
       isFinished:true
     }
