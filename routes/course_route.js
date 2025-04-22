@@ -8,4 +8,5 @@ router.get('/courses',verifyToken,courseController.courses)
 router.delete('/delete',verifyToken,courseController.deleteCourse)
 router.post('/add',verifyToken,courseController.addCourse)
 router.put('/start',verifyToken,courseController.startCourse)
+router.put('/finish',verifyToken,courseController.finishCourse)
 module.exports = router
