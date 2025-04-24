@@ -9,4 +9,5 @@ router.post('/logout',verifyToken,authController.logout)
 router.put('/update-profile',verifyToken,authController.updateProfile)
 router.put('/update-notification',verifyToken,authController.updateNotificationToken)
 router.get('/user-info',verifyToken,authController.userInfo)
+router.delete('/delete',verifyToken,authController.deleteUser)
 module.exports = router
