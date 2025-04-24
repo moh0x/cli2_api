@@ -118,7 +118,16 @@ const updateNotificationToken =  async (req, res) => {
 		res.status(500).json({ error: "Internal Server Error" });
 	}
 };
+const deleteUser = async (req,res)=>{
+  try {
+    const token = req.headers.token;
+    const user = await User.findOne({token:token},{password:false})
+       await User.findByIdAndDelete(user._id); 
+       res.status(200).json({"status":httpStatus.SUCCESS,"data":null });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 
 
-
-module.exports = {signUp,login,logout,updateProfile,userInfo,updateNotificationToken}
+module.exports = {signUp,login,logout,updateProfile,userInfo,updateNotificationToken,deleteUser}
