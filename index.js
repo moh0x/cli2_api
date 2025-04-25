@@ -11,12 +11,13 @@ const courseRoute = require('./routes/course_route')
 app.use('/api/course/',courseRoute)
 const serviceRoute = require('./routes/service_route')
 app.use('/api/service/',serviceRoute)
+const adminRoute = require('./routes/admin_route')
+app.use('/api/admin/',adminRoute)
 app.listen(port,async()=>{
     console.log('connected');  
     await db.connectDb()
 })
 require('dotenv').config();
-
 
 
 
