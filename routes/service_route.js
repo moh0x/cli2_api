@@ -5,6 +5,6 @@ const serviceController = require('../controller/service_controller')
 const {verifyToken} = require('../utility/verifyToken')
 const {verifyAdmin} = require('../utility/verify_role_admin')
 router.get('/services',verifyToken,serviceController.services)
-router.delete('/delete',verifyToken,verifyAdmin,serviceController.deleteService)
+router.delete('/delete',verifyAdmin,serviceController.deleteService)
 router.post('/add',body('serviceName').isString().isLength({min:3,max:50}),verifyToken,verifyAdmin,serviceController.addService)
 module.exports = router
