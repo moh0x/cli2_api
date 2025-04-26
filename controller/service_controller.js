@@ -21,6 +21,10 @@ const deleteService =  async (req, res) => {
 };
 const addService =  async (req, res) => {
     try {
+       const valid = validationResult(req)
+              if (!valid.isEmpty()) {
+                return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":valid['errors'][0].msg});
+          }
     const{serviceName}=req.body
     const service = new Service({
       serviceName:serviceName
@@ -36,7 +40,7 @@ const addService =  async (req, res) => {
 
 const services = async (req,res)=>{
     try {
-      const services = await Service.find();
+      const services = await Service.find().sort({createdAt:-1});
       res.status(200).json({"status":httpStatus.SUCCESS,"data":services})
     } catch (error) {
       res.status(500).json({ error: "Internal Server Error" });
