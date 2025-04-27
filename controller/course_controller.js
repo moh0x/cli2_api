@@ -57,12 +57,21 @@ const courses = async (req,res)=>{
     try {
         const token = req.headers.token;
       const user = await User.findOne({token:token})
-      const courses = await Course.find({userId:user._id});
+      const courses = await Course.find({userId:user._id}).sort({createdAt:-1});
       res.status(200).json({"status":httpStatus.SUCCESS,"data":courses})
     } catch (error) {
       res.status(500).json({ error: "Internal Server Error" });
     }
 }
+const coursesAdmin = async (req,res)=>{
+  try {
+    const courses = await Course.find().sort({createdAt:-1});
+    res.status(200).json({"status":httpStatus.SUCCESS,"data":courses})
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
 const startCourse =  async (req, res) => {
 	try {
     const{longtitudeStart,latitudeStart,courseId}=req.body;
@@ -132,4 +141,4 @@ const finishCourse =  async (req, res) => {
 		res.status(500).json({ error: "Internal Server Error" });
 	}
 };
-module.exports = {deleteCourse,courseInfo,courses,addCourse,startCourse,finishCourse}
+module.exports = {deleteCourse,courseInfo,courses,addCourse,startCourse,finishCourse,coursesAdmin}
