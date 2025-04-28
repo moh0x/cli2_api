@@ -34,7 +34,7 @@ const login =async(req,res)=>{
     const{email,password} = req.body
   const admin = await Admin.findOne({email : email},{__v:false});
  const valid = validationResult (req);
-
+console.log(valid)
 if (valid.isEmpty()) {
 if (admin) {
    
