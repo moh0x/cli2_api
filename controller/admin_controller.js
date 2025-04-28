@@ -71,7 +71,7 @@ const getAdmins = async(req,res)=>{
 }
 const addAdmin =async(req,res)=>{
   try {
-    const token = req.heades.token;
+    const token = req.headers.token;
     const adminTrue = await Admin.findOne({token:token})
     if (adminTrue.isAdmin) {
       const valid = validationResult(req)
@@ -103,7 +103,7 @@ const addAdmin =async(req,res)=>{
 }
 const editAdminPassword =async(req,res)=>{
   try {
-    const token = req.heades.token;
+    const token = req.headers.token;
     const adminTrue = await Admin.findOne({token:token})
     if (adminTrue.isAdmin) {
       const valid = validationResult(req)
