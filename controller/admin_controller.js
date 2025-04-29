@@ -1,8 +1,11 @@
 const {Admin} = require('../model/admin_model')
+const {User} = require('../model/auth_user')
+const {Course} = require('../model/course_controller')
 const httpStatus = require('../constant/httpStatus')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {validationResult} = require('express-validator')
+const { Payment } = require('../model/payments_model')
 const signUp =async(req,res)=>{
     try {
         const valid = validationResult(req)
@@ -147,6 +150,25 @@ const deleteAdmin = async (req,res)=>{
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+const getStatics = async (req,res)=>{
+  try {
+    const token = req.headers.token;
+    const adminTrue = await Admin.findOne({token:token})
+      if (adminTrue.isAdmin) {
+       const activeUsers = await User.find({isVerified:true}).sort({createdAt:-1})
+       const inActiveUsers = await User.find({isVerified:false}).sort({createdAt:-1})
+       const complteCourses = await Course.find({isFinished:true}).sort({createdAt:-1})
+       const inComplteCourses = await Course.find({isFinished:false}).sort({createdAt:-1})
+       const completPayments = await Payment.find({isVerified:true}).sort({createdAt:-1})
+       const inCompletPayments = await Payment.find({isVerified:false}).sort({createdAt:-1})
+       res.status(200).json({"status":httpStatus.SUCCESS,"data":{"activeUsers":activeUsers.length,"inActiveUsers":inActiveUsers.length,"complteCourses":complteCourses.length,"inComplteCourses":inComplteCourses.length,"completPayments":completPayments.length,"inCompletPayments":inCompletPayments.length},"message":"you don't have permission" });
+      } else {
+        res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"you don't have permission" });
+      }
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 
 
-module.exports = {signUp,login,getAdmins,addAdmin,editAdminPassword,deleteAdmin}
+module.exports = {signUp,login,getAdmins,addAdmin,editAdminPassword,deleteAdmin,getStatics}
