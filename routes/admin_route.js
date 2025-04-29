@@ -9,5 +9,6 @@ router.post('/login',body("email").isEmail().isLength({min:8,max:50}).withMessag
 router.post('/add',body("email").isLength({min:8,max:50}).withMessage("typr valid email"),body('password').isLength({min:8,max:50}).withMessage('type valid password'),verifyToken,verifyAdmin,adminController.addAdmin)
 router.put('/edit',body('password').isLength({min:8,max:50}).withMessage('type valid password'),verifyToken,verifyAdmin,adminController.editAdminPassword)
 router.get('/admins',verifyToken,verifyAdmin,adminController.getAdmins)
+router.get('/statics',verifyToken,verifyAdmin,adminController.getStatics)
 router.delete('/delete',verifyToken,verifyAdmin,adminController.deleteAdmin)
 module.exports = router
