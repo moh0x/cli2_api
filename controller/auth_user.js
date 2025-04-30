@@ -166,4 +166,40 @@ const activeUser = async(req,res)=>{
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
-module.exports = {signUp,login,logout,updateProfile,userInfo,updateNotificationToken,deleteUser,getInActiveUsers,activeUser}
+const getActiveUsers = async(req,res)=>{
+  try {
+    const token = req.headers.token;
+    const adminTrue = await Admin.findOne({token:token})
+    
+       const activeUsers = await User.find({isVerified:true}).sort({createdAt:-1})
+       res.status(200).json({"status":httpStatus.SUCCESS,"data":activeUsers});
+      
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+const inActiveUser = async(req,res)=>{
+  try {
+    const token = req.headers.token;
+    const adminTrue = await Admin.findOne({token:token})
+    const{_id}=req.body._id;
+       const activeUser = await User.findOne({id:_id})
+     if (!activeUser) {
+    return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
+     }
+     await User.findByIdAndUpdate(activeUser.id,{
+      $set:{
+        isVerified:false
+      }
+     })
+     await activeUser.save();
+       const retUser = await User.findOne({id:_id})
+       res.status(200).json({"status":httpStatus.SUCCESS,"data":retUser});
+
+  } catch (error) {
+    console.log(error);
+    
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+module.exports = {signUp,login,logout,updateProfile,userInfo,updateNotificationToken,deleteUser,getInActiveUsers,activeUser,getActiveUsers,inActiveUser}
