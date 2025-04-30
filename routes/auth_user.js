@@ -11,6 +11,6 @@ router.put('/update-profile',verifyToken,authController.updateProfile)
 router.put('/update-notification',verifyToken,authController.updateNotificationToken)
 router.get('/user-info',verifyToken,authController.userInfo)
 router.delete('/delete',verifyToken,authController.deleteUser)
-router.get('/active',verifyToken,verifyAdmin,authController.getInActiveUsers)
+router.get('/inActive',verifyToken,verifyAdmin,authController.getInActiveUsers)
 router.put('/active',verifyToken,verifyAdmin,authController.activeUser)
 module.exports = router
