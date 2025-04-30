@@ -13,4 +13,6 @@ router.get('/user-info',verifyToken,authController.userInfo)
 router.delete('/delete',verifyToken,authController.deleteUser)
 router.get('/inActive',verifyToken,verifyAdmin,authController.getInActiveUsers)
 router.put('/active',verifyToken,verifyAdmin,authController.activeUser)
+router.get('/active',verifyToken,verifyAdmin,authController.getActiveUsers)
+router.put('/inActive',verifyToken,verifyAdmin,authController.inActiveUser)
 module.exports = router
