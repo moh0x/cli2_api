@@ -6,6 +6,7 @@ const {validationResult} = require('express-validator')
 const cloudinary=require( "cloudinary").v2;
 const gen = require("@codedipper/random-code");
 const axios = require('axios')
+const { Admin } = require('../model/admin_model')
 const signUp =async(req,res)=>{
     try {
         const valid = validationResult(req)
@@ -129,5 +130,43 @@ const deleteUser = async (req,res)=>{
   }
 }
 
-
-module.exports = {signUp,login,logout,updateProfile,userInfo,updateNotificationToken,deleteUser}
+const getInActiveUsers = async(req,res)=>{
+  try {
+    const token = req.headers.token;
+    const adminTrue = await Admin.findOne({token:token})
+      if (adminTrue.isAdmin) {
+       const inActiveUsers = await User.find({isVerified:false}).sort({createdAt:-1})
+       res.status(200).json({"status":httpStatus.SUCCESS,"data":inActiveUsers});
+      } else {
+        res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"you don't have permission" });
+      }
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+const activeUser = async(req,res)=>{
+  try {
+    const token = req.headers.token;
+    const adminTrue = await Admin.findOne({token:token})
+    const{_id}=req.headers._id;
+      if (adminTrue.isAdmin) {
+       const inActiveUser = await User.findById(_id)
+     if (!inActiveUser) {
+      res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
+     }
+     await User.findByIdAndUpdate(_id,{
+      $set:{
+        isVerified:true
+      }
+     })
+     await inActiveUser.save();
+       const retUser = await User.findById(_id)
+       res.status(200).json({"status":httpStatus.SUCCESS,"data":retUser});
+      } else {
+        res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"you don't have permission" });
+      }
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+module.exports = {signUp,login,logout,updateProfile,userInfo,updateNotificationToken,deleteUser,getInActiveUsers,activeUser}
