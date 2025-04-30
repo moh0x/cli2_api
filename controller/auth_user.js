@@ -150,7 +150,8 @@ const activeUser = async(req,res)=>{
     const adminTrue = await Admin.findOne({token:token})
     const{_id}=req.body._id;
       if (adminTrue.isAdmin) {
-       const inActiveUser = await User.findById(_id)
+       const inActiveUser = await User.findOne({_id:_id})
+	      console.log(inActiveUser)
      if (!inActiveUser) {
     return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
      }
@@ -160,7 +161,7 @@ const activeUser = async(req,res)=>{
       }
      })
      await inActiveUser.save();
-       const retUser = await User.findById(_id)
+       const retUser = await User.findOne({_id:_id})
        res.status(200).json({"status":httpStatus.SUCCESS,"data":retUser});
       } else {
         res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"you don't have permission" });
