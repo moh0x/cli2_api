@@ -47,6 +47,11 @@ const userSchema = new mongoose.Schema(
 			type:String,
 			enum:['offline','driving','online'],
 			default:'offline'
+		},
+		city:{
+			type:String,
+			maxLength:50,
+			
 		}
 	},
 	{ timestamps: true }
