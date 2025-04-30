@@ -151,7 +151,7 @@ const activeUser = async(req,res)=>{
      if (!inActiveUser) {
     return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
      }
-     await User.findByIdAndUpdate(_id,{
+     await User.findByIdAndUpdate(inActiveUser.id,{
       $set:{
         isVerified:true
       }
