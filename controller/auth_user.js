@@ -134,12 +134,10 @@ const getInActiveUsers = async(req,res)=>{
   try {
     const token = req.headers.token;
     const adminTrue = await Admin.findOne({token:token})
-      if (adminTrue.isAdmin) {
+    
        const inActiveUsers = await User.find({isVerified:false}).sort({createdAt:-1})
        res.status(200).json({"status":httpStatus.SUCCESS,"data":inActiveUsers});
-      } else {
-        res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"you don't have permission" });
-      }
+      
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -149,9 +147,7 @@ const activeUser = async(req,res)=>{
     const token = req.headers.token;
     const adminTrue = await Admin.findOne({token:token})
     const{_id}=req.body._id;
-      if (adminTrue.isAdmin) {
-       const inActiveUser = await User.findOne({_id:_id})
-	      console.log(inActiveUser)
+       const inActiveUser = await User.findOne({id:_id})
      if (!inActiveUser) {
     return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
      }
@@ -161,12 +157,12 @@ const activeUser = async(req,res)=>{
       }
      })
      await inActiveUser.save();
-       const retUser = await User.findOne({_id:_id})
+       const retUser = await User.findOne({id:_id})
        res.status(200).json({"status":httpStatus.SUCCESS,"data":retUser});
-      } else {
-        res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"you don't have permission" });
-      }
+
   } catch (error) {
+    console.log(error);
+    
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
