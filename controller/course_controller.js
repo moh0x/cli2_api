@@ -141,4 +141,13 @@ const finishCourse =  async (req, res) => {
 		res.status(500).json({ error: "Internal Server Error" });
 	}
 };
-module.exports = {deleteCourse,courseInfo,courses,addCourse,startCourse,finishCourse,coursesAdmin}
+const courseOneUser= async(req,res)=>{
+  const{_id}= req.body
+  const user = await User.findOne({id:_id});
+if (!user) {
+  return res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id"})
+}
+const courses = await Course.find({userId:user.id})
+res.status(200).json({"status":httpStatus.SUCCESS,"data":courses})
+}
+module.exports = {deleteCourse,courseInfo,courses,addCourse,startCourse,finishCourse,coursesAdmin,courseOneUser}
