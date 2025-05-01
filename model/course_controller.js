@@ -72,6 +72,10 @@ const courseSchema = new mongoose.Schema(
         },
         cartGrisImage:{
             type:String
+        },
+        isPay:{
+            type:Boolean,
+            default:false
         }
     },
     { timestamps: true }
