@@ -9,11 +9,13 @@ const cloudinary=require( "cloudinary").v2;
 
 const addPayment =  async (req, res) => {
     try {
+        
     const{userId,earnedOfCourses,payFromCompany,cash,commision}=req.body
-    const user = await User.findOne({id:userId});
+    const user = await User.findOne({_id:userId});    
     const courses = await Course.find({userId:user.id,isFinished:true,isAccept:true});
-    chauferPayFirst = ((+payFromCompany + +cash) * +commision) /100
-    chauferPay = chauferPayFirst - +cash;
+   const chauferPayFirst = ((+payFromCompany + +cash) * +commision) /100
+   
+   const chauferPay = earnedOfCourses - (+cash + +chauferPayFirst);
     const payment = new Payment({
       userId:userId,
       numberOfCourses:courses.length,
@@ -34,8 +36,10 @@ const addPayment =  async (req, res) => {
         await courses[index].save()
     }
   await payment.save();
-  res.status(200).json({"status":httpStatus.SUCCESS,"data":course})  
+  res.status(200).json({"status":httpStatus.SUCCESS,"data":payment})  
     } catch (error) {
+        console.log(error);
+        
         console.log("Error in logout controller", error.message);
         res.status(500).json({ error: "Internal Server Error" });
     }
