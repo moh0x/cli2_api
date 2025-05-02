@@ -10,6 +10,6 @@ const { verifyAdmin } = require('../utility/verify_role_admin')
 router.post('/add',verifyToken,verifyAdmin,paymentController.addPayment)
 // router.put('/start',verifyToken,courseController.startCourse)
 // router.put('/finish',verifyToken,courseController.finishCourse)
-// router.get('/courses/admin',verifyToken,verifyAdmin,courseController.coursesAdmin)
-// router.get('/courses/user',verifyToken,verifyAdmin,courseController.courseOneUser)
+router.get('/payments/admin',verifyToken,verifyAdmin,paymentController.paymentsAdmin)
+router.post('/payments/user',verifyToken,verifyAdmin,paymentController.paymentOneUser)
 module.exports = router
