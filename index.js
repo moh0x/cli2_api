@@ -13,6 +13,8 @@ const serviceRoute = require('./routes/service_route')
 app.use('/api/service/',serviceRoute)
 const adminRoute = require('./routes/admin_route')
 app.use('/api/admin/',adminRoute)
+const paymentRoute = require('./routes/payments_route')
+app.use('/api/payment/',paymentRoute)
 app.listen(port,async()=>{
     console.log('connected');  
     await db.connectDb()
