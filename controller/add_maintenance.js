@@ -133,6 +133,6 @@ if (!student) {
   return res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id"})
 }
 const maintenance = await Maintenance.find({userId:student.id})
-res.status(200).json({"status":httpStatus.SUCCESS,"data":payments})
+res.status(200).json({"status":httpStatus.SUCCESS,"data":maintenance})
 }
 module.exports = {addMaintenance,maintenanceOneUser}
