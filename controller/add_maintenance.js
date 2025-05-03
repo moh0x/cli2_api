@@ -5,6 +5,7 @@ const {validationResult} = require('express-validator')
 const { Course } = require('../model/course_controller')
 const { Maintenance } = require('../model/maintenance_add')
 const { User } = require('../model/auth_user')
+const { Student } = require('../model/student_model')
 const cloudinary=require( "cloudinary").v2;
 
 const addMaintenance =  async (req, res) => {
@@ -123,15 +124,15 @@ const addMaintenance =  async (req, res) => {
 // //         res.status(500).json({ error: "Internal Server Error" });
 // //     }
 // // };
-// const paymentOneUser= async(req,res)=>{
-//   const{_id}= req.body
+const maintenanceOneUser= async(req,res)=>{
+  const token= req.headers.token;
   
-//   const user = await User.findById(_id);
+  const student = await Student.findOne({token:token});
   
-// if (!user) {
-//   return res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id"})
-// }
-// const payments = await Payment.find({userId:user.id})
-// res.status(200).json({"status":httpStatus.SUCCESS,"data":payments})
-// }
-module.exports = {addMaintenance}
+if (!student) {
+  return res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id"})
+}
+const maintenance = await Maintenance.find({userId:student.id})
+res.status(200).json({"status":httpStatus.SUCCESS,"data":payments})
+}
+module.exports = {addMaintenance,maintenanceOneUser}
