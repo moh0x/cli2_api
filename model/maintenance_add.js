@@ -19,6 +19,11 @@ const maintenanceSchema = new mongoose.Schema(
        },
        roomNumber:{
         type:String
+       },
+       status:{
+        type:String,
+        enum:['agree','not agree'],
+        default:'not agree'
        }
     },
     { timestamps: true }
