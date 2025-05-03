@@ -14,10 +14,10 @@ const maintenanceSchema = new mongoose.Schema(
         type:String,
         enum: ['كهرباء', 'سباكة', 'نجارة'],
        },
-        fullName:{
-        type:String,
-       },
        details:{
+        type:String
+       },
+       roomNumber:{
         type:String
        }
     },
