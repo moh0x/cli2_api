@@ -17,11 +17,15 @@ const paymentRoute = require('./routes/payments_route')
 app.use('/api/payment/',paymentRoute)
 const studentRoute = require('./routes/student_route')
 app.use('/api/student/',studentRoute)
+const maintenanceRoute = require('./routes/maintenance_route')
+app.use('/api/maintenance/',maintenanceRoute)
 app.listen(port,async()=>{
     console.log('connected');  
     await db.connectDb()
 })
 require('dotenv').config();
+
+
 
 
 
