@@ -1,4 +1,4 @@
-const {Student} = require('../model/student_model')
+const {Student, Student} = require('../model/student_model')
 const {User} = require('../model/auth_user')
 const {Course} = require('../model/course_controller')
 const httpStatus = require('../constant/httpStatus')
@@ -62,6 +62,16 @@ res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":valid['erro
  }
 
 }
+const studentInfo = async (req,res)=>{
+  try {
+    const token = req.headers.token;
+    const student = await Student.findOne({token:token},{password:false})
+       res.status(200).json({"status":httpStatus.SUCCESS,"data":student})
+    
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 
 
-module.exports = {signUp,login}
+module.exports = {signUp,login,studentInfo}
