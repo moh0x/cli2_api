@@ -1,4 +1,4 @@
-const {Student, Student} = require('../model/student_model')
+const {Student} = require('../model/student_model')
 const {User} = require('../model/auth_user')
 const {Course} = require('../model/course_controller')
 const httpStatus = require('../constant/httpStatus')
