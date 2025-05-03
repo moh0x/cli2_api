@@ -132,7 +132,30 @@ const maintenanceOneUser= async(req,res)=>{
 if (!student) {
   return res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id"})
 }
-const maintenance = await Maintenance.find({userId:student.id})
+const maintenance = await Maintenance.find({userId:student.id}).sort({createdAt:-1})
 res.status(200).json({"status":httpStatus.SUCCESS,"data":maintenance})
 }
-module.exports = {addMaintenance,maintenanceOneUser}
+const maintenanceStatics =async(req,res)=>{
+  try {
+    const now = Date.now();
+    const oneDayAgo = new Date(now - 24 * 60 * 60 * 1000);
+    const twoDaysAgo = new Date(now - 48 * 60 * 60 * 1000);
+    const allMaintenances = await Maintenance.find();
+    const aggreeMaintenances = await Maintenance.find({status:'agree'});
+const nowMaintenances = await Maintenance.find({
+  createdAt: { $gt: oneDayAgo }
+});
+
+const oneDayMaintenances = await Maintenance.find({
+  createdAt: { $gt: twoDaysAgo, $lt: oneDayAgo }
+});
+
+const twoDaysMaintenances = await Maintenance.find({
+  createdAt: { $lt: twoDaysAgo }
+});
+res.status(200).json({"status":httpStatus.SUCCESS,"data":{"twoDaysMaintenances":twoDaysMaintenances.length,"oneDayMaintenances":oneDayMaintenances.length,"nowMaintenances":nowMaintenances.length,"aggreeMaintenances":aggreeMaintenances.length,"allMaintenances":allMaintenances.length,"aggreeMaintenances":aggreeMaintenances.length}})
+  } catch (error) {
+    res.status(500).json({"status":httpStatus.ERROR,"message":"error"})
+  }
+}
+module.exports = {addMaintenance,maintenanceOneUser,maintenanceStatics}
