@@ -9,12 +9,13 @@ const cloudinary=require( "cloudinary").v2;
 
 const addMaintenance =  async (req, res) => {
     try {      
-    const{userId,fullName,typeOfMaintenance,details}=req.body  
+    const{userId,fullName,typeOfMaintenance,details,roomNumber}=req.body  
     const maintenance = new Maintenance({
       userId:userId,
       fullName:fullName,
       typeOfMaintenance:typeOfMaintenance,
       details:details,
+      roomNumber:roomNumber
     })       
   await maintenance.save();
   res.status(200).json({"status":httpStatus.SUCCESS,"data":maintenance})  
