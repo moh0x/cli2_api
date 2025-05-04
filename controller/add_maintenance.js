@@ -171,4 +171,16 @@ const maintenanceByType=async(req,res)=>{
   res.status(500).json({ error: "Internal Server Error" });
  }
 }
-module.exports = {addMaintenance,maintenanceOneUser,maintenanceStatics,maintenanceByType}
+const maintenanceType=async(req,res)=>{
+  try {
+   const type = req.body.type;
+   const maintenances = await Maintenance.find({typeOfMaintenance:type})
+   res.status(200).json({"status":httpStatus.SUCCESS,"data":maintenances})
+  } catch (error) {
+   console.log(error);
+         
+   console.log("Error in logout controller", error.message);
+   res.status(500).json({ error: "Internal Server Error" });
+  }
+ }
+module.exports = {addMaintenance,maintenanceOneUser,maintenanceStatics,maintenanceByType,maintenanceType}
