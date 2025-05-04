@@ -158,4 +158,17 @@ res.status(200).json({"status":httpStatus.SUCCESS,"data":{"twoDaysMaintenances":
     res.status(500).json({"status":httpStatus.ERROR,"message":"error"})
   }
 }
-module.exports = {addMaintenance,maintenanceOneUser,maintenanceStatics}
+const maintenanceByType=async(req,res)=>{
+ try {
+  const token = req.headers.token;
+  const student = await Student.findOne({token:token});
+  const maintenances = await Maintenance.find({typeOfMaintenance:student.typeOfMaintenance})
+  res.status(200).json({"status":httpStatus.SUCCESS,"data":maintenances})
+ } catch (error) {
+  console.log(error);
+        
+  console.log("Error in logout controller", error.message);
+  res.status(500).json({ error: "Internal Server Error" });
+ }
+}
+module.exports = {addMaintenance,maintenanceOneUser,maintenanceStatics,maintenanceByType}
