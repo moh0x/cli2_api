@@ -16,6 +16,11 @@ const studentSchema = new mongoose.Schema(
             type:String,
             default:null
         },
+         typeOfMaintenance:{
+                type:String,
+                enum: ['كهرباء', 'سباكة', 'نجارة'],
+                default:'كهرباء'
+               },
     },
     { timestamps: true }
 );
