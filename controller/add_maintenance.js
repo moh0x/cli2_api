@@ -183,4 +183,17 @@ const maintenanceType=async(req,res)=>{
    res.status(500).json({ error: "Internal Server Error" });
   }
  }
-module.exports = {addMaintenance,maintenanceOneUser,maintenanceStatics,maintenanceByType,maintenanceType}
+ const maintenanceDelete=async(req,res)=>{
+  try {
+   const id = req.body.id;
+   const maintenances = await Maintenance.find({id:id})
+   await Maintenance.findByIdAndDelete(maintenances.id)
+   res.status(200).json({"status":httpStatus.SUCCESS,"data":null})
+  } catch (error) {
+   console.log(error);
+         
+   console.log("Error in logout controller", error.message);
+   res.status(500).json({ error: "Internal Server Error" });
+  }
+ }
+module.exports = {addMaintenance,maintenanceOneUser,maintenanceStatics,maintenanceByType,maintenanceType,maintenanceDelete}
