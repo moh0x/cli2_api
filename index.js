@@ -19,11 +19,14 @@ const studentRoute = require('./routes/student_route')
 app.use('/api/student/',studentRoute)
 const maintenanceRoute = require('./routes/maintenance_route')
 app.use('/api/maintenance/',maintenanceRoute)
+const postRoute = require('./routes/post_routes')
+app.use('/api/post/',postRoute)
 app.listen(port,async()=>{
     console.log('connected');  
     await db.connectDb()
 })
 require('dotenv').config();
+
 
 
 
