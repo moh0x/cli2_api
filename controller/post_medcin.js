@@ -11,12 +11,14 @@ const cloudinary=require( "cloudinary").v2;
 
 const addPost =  async (req, res) => {
     try {      
-    const{userId,fullName,postTitle,postDetatils}=req.body  
+    const{userId,fullName,postTitle,postDetatils,postType,postVideo}=req.body  
     const post = new PostMedcin({
       userId:userId,
       fullName:fullName,
       postTitle:postTitle,
       postDetails:postDetatils,
+        postType:postType,
+        postVideo:postVideo
     })       
   await post.save();
   res.status(200).json({"status":httpStatus.SUCCESS,"data":post})  
