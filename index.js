@@ -21,6 +21,8 @@ const maintenanceRoute = require('./routes/maintenance_route')
 app.use('/api/maintenance/',maintenanceRoute)
 const postRoute = require('./routes/post_routes')
 app.use('/api/post/',postRoute)
+const postMedcinRoute = require('./routes/post_medcin_routes')
+app.use('/api/postMedcin/',postMedcinRoute)
 app.listen(port,async()=>{
     console.log('connected');  
     await db.connectDb()
