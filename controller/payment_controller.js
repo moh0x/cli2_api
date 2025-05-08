@@ -44,6 +44,17 @@ const addPayment =  async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
+const payments = async(req,res)=>{
+  const token= req.headers.token;
+  
+  const user = await User.findOne({token:token});
+  
+if (!user) {
+  return res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id"})
+}
+const payments = await Payment.find({userId:user.id})
+res.status(200).json({"status":httpStatus.SUCCESS,"data":payments})
+}
 // const courseInfo = async (req,res)=>{
 //   try {
 //     const courseId = req.params.id;
