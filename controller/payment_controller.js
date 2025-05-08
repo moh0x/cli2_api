@@ -163,4 +163,4 @@ if (!user) {
 const payments = await Payment.find({userId:user.id})
 res.status(200).json({"status":httpStatus.SUCCESS,"data":payments})
 }
-module.exports = {addPayment,paymentOneUser,paymentsAdmin}
+module.exports = {addPayment,paymentOneUser,paymentsAdmin,payments}
