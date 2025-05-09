@@ -77,13 +77,17 @@ const updateProfile =  async (req, res) => {
 	try {
 		const token = req.headers.token;
     const user = await User.findOne({token:token},{password:false})
-    const{logtitude,latitude,isOnline,status} = req.body
+    const{logtitude,latitude,isOnline,status,email,isAssurance,city,fullname} = req.body
   await User.findByIdAndUpdate(user._id,{ 
     $set:{
       logtitude:logtitude,
       latitude:latitude,
       isOnline:isOnline ?? user.isOnline,
-      status:status ?? user.status
+      status:status ?? user.status,
+      email:email ?? user.email,
+      isAssurance:isAssurance ?? user.isAssurance,
+      city:city ?? user.city,
+      fullname:fullname ?? user.fullname
     }
   })
   await user.save()
