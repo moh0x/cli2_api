@@ -52,6 +52,9 @@ const userSchema = new mongoose.Schema(
 			type:String,
 			maxLength:50,
 			
+		},isAssurance:{
+			type:Boolean,
+			default:false
 		}
 	},
 	{ timestamps: true }
