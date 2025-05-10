@@ -23,14 +23,13 @@ const postRoute = require('./routes/post_routes')
 app.use('/api/post/',postRoute)
 const postMedcinRoute = require('./routes/post_medcin_routes')
 app.use('/api/postMedcin/',postMedcinRoute)
+const ideaRoute = require('./routes/ideas_route')
+app.use('/api/idea/',ideaRoute)
 app.listen(port,async()=>{
     console.log('connected');  
     await db.connectDb()
 })
 require('dotenv').config();
-
-
-
 
 
 
