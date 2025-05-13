@@ -13,7 +13,7 @@ const ban =  async(req,res)=>{
     const adminTrue = await Admin.findOne({token:token})
     const{_id,banned}=req.body._id;
        const user = await User.findOne({id:_id})
-     if (username) {
+     if (user) {
     return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
      }
      await User.findByIdAndUpdate(inActiveUser.id,{
@@ -38,7 +38,7 @@ const disBan =  async(req,res)=>{
     const adminTrue = await Admin.findOne({token:token})
     const{_id}=req.body._id;
        const user = await User.findOne({id:_id})
-     if (username) {
+     if (user) {
     return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
      }
      await User.findByIdAndUpdate(inActiveUser.id,{
