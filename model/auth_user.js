@@ -2,10 +2,14 @@ const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema(
 	{
+		username:{
+			type: String,
+			default: " "
+		},
 		fullname: {
 			type: String,
 			required: true,
-			unique: true,
+	
 		},
 		password: {
 			type: String,
@@ -15,7 +19,7 @@ const userSchema = new mongoose.Schema(
 		email: {
 			type: String,
 			default:"",
-			unique: true,
+			
 		},
 		token:{
 			type:String,
@@ -50,11 +54,23 @@ const userSchema = new mongoose.Schema(
 		},
 		city:{
 			type:String,
-			maxLength:50,
-			
-		},isAssurance:{
+			maxLength:50,	
+		},
+		isAssurance:{
 			type:Boolean,
 			default:false
+		},
+		cartGris:{
+			type:String
+		},
+		permis:{
+			type:String
+		},
+		drivingLicenece:{
+			type:String
+		},
+		chaque:{
+			type:String
 		}
 	},
 	{ timestamps: true }
@@ -62,3 +78,4 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model("User", userSchema);
 module.exports = {User}
+
