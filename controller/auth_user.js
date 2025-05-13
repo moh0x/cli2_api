@@ -11,20 +11,23 @@ const ban =  async(req,res)=>{
   try {
     const token = req.headers.token;
     const adminTrue = await Admin.findOne({token:token})
-    const{_id,banned}=req.body._id;
-       const user = await User.findOne({id:_id})
-     if (user) {
+    const{_id,banned}=req.body;
+    console.log(_id);
+    
+       const user = await User.findOne({_id:_id})
+       console.log(user);
+       
+     if (!user) {
     return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
      }
-     await User.findByIdAndUpdate(inActiveUser.id,{
+     await User.findByIdAndUpdate(user.id,{
       $set:{
         isBanned:true,
         banned:banned
       }
      })
      await user.save();
-       const retUser = await User.findOne({id:_id})
-       res.status(200).json({"status":httpStatus.SUCCESS,"data":retUser});
+       res.status(200).json({"status":httpStatus.SUCCESS,"data":user});
 
   } catch (error) {
     console.log(error);
@@ -36,19 +39,21 @@ const disBan =  async(req,res)=>{
   try {
     const token = req.headers.token;
     const adminTrue = await Admin.findOne({token:token})
-    const{_id}=req.body._id;
-       const user = await User.findOne({id:_id})
-     if (user) {
+    const{_id}=req.body;
+  
+       const user = await User.findOne({_id:_id})
+       console.log(user);
+       
+     if (!user) {
     return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
      }
-     await User.findByIdAndUpdate(inActiveUser.id,{
+     await User.findByIdAndUpdate(user.id,{
       $set:{
         isBanned:false
       }
      })
      await user.save();
-       const retUser = await User.findOne({id:_id})
-       res.status(200).json({"status":httpStatus.SUCCESS,"data":retUser});
+       res.status(200).json({"status":httpStatus.SUCCESS,"data":user});
 
   } catch (error) {
     console.log(error);
