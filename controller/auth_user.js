@@ -22,6 +22,7 @@ const signUp =async(req,res)=>{
         const hashPassword =await bcrypt.hash(password,salt)
         const token = jwt.sign({phoneNumber:phoneNumber,fullname:fullname},"token")
         const newUser = new User({
+          username:fullname,
             fullname:fullname,
             password:hashPassword,
             token:token,
