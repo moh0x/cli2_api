@@ -7,6 +7,55 @@ const cloudinary=require( "cloudinary").v2;
 const gen = require("@codedipper/random-code");
 const axios = require('axios')
 const { Admin } = require('../model/admin_model')
+const ban =  async(req,res)=>{
+  try {
+    const token = req.headers.token;
+    const adminTrue = await Admin.findOne({token:token})
+    const{_id,banned}=req.body._id;
+       const user = await User.findOne({id:_id})
+     if (username) {
+    return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
+     }
+     await User.findByIdAndUpdate(inActiveUser.id,{
+      $set:{
+        isBanned:true,
+        banned:banned
+      }
+     })
+     await user.save();
+       const retUser = await User.findOne({id:_id})
+       res.status(200).json({"status":httpStatus.SUCCESS,"data":retUser});
+
+  } catch (error) {
+    console.log(error);
+    
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+const disBan =  async(req,res)=>{
+  try {
+    const token = req.headers.token;
+    const adminTrue = await Admin.findOne({token:token})
+    const{_id}=req.body._id;
+       const user = await User.findOne({id:_id})
+     if (username) {
+    return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
+     }
+     await User.findByIdAndUpdate(inActiveUser.id,{
+      $set:{
+        isBanned:false
+      }
+     })
+     await user.save();
+       const retUser = await User.findOne({id:_id})
+       res.status(200).json({"status":httpStatus.SUCCESS,"data":retUser});
+
+  } catch (error) {
+    console.log(error);
+    
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 const signUp =async(req,res)=>{
     try {
         const valid = validationResult(req)
@@ -212,4 +261,4 @@ const inActiveUser = async(req,res)=>{
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
-module.exports = {signUp,login,logout,updateProfile,userInfo,updateNotificationToken,deleteUser,getInActiveUsers,activeUser,getActiveUsers,inActiveUser}
+module.exports = {signUp,login,logout,updateProfile,userInfo,updateNotificationToken,deleteUser,getInActiveUsers,activeUser,getActiveUsers,inActiveUser,ban,disBan}
