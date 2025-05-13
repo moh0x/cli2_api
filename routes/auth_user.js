@@ -15,4 +15,6 @@ router.get('/inActive',verifyToken,verifyAdmin,authController.getInActiveUsers)
 router.put('/active',verifyToken,verifyAdmin,authController.activeUser)
 router.get('/active',verifyToken,verifyAdmin,authController.getActiveUsers)
 router.put('/inActive',verifyToken,verifyAdmin,authController.inActiveUser)
+router.put('/ban',verifyToken,verifyAdmin,authController.ban)
+router.put('/disBan',verifyToken,verifyAdmin,authController.disBan)
 module.exports = router
