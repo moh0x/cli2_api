@@ -13,8 +13,7 @@ const signUp =async(req,res)=>{
         if (!valid.isEmpty()) {
           return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":valid['errors'][0].msg});
         }
-        const {fullname,password,phoneNumber} = req.body
-              
+        const {fullname,password,phoneNumber,cartGris,permis,drivingLicence,chaque} = req.body      
         const user = await User.findOne({phoneNumber:phoneNumber});
         if (user) {
           return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"user already exist"})
@@ -27,6 +26,10 @@ const signUp =async(req,res)=>{
             password:hashPassword,
             token:token,
             phoneNumber:phoneNumber,
+            cartGris:cartGris,
+            permis:permis,
+            chaque:chaque,
+            drivingLicenece:drivingLicence
         })
         await newUser.save()  
               res.status(200).json({"status":httpStatus.SUCCESS,"data":newUser})     
