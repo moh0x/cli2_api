@@ -31,7 +31,8 @@ const signUp =async(req,res)=>{
             permis:permis,
             chaque:chaque,
             drivingLicenece:drivingLicence,
-            isAssurance:isAssurance
+            isAssurance:isAssurance,
+		email:fullname
         })
         await newUser.save()  
               res.status(200).json({"status":httpStatus.SUCCESS,"data":newUser})     
