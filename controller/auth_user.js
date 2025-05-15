@@ -7,6 +7,28 @@ const cloudinary=require( "cloudinary").v2;
 const gen = require("@codedipper/random-code");
 const axios = require('axios')
 const { Admin } = require('../model/admin_model')
+const changeUserStates =  async(req,res)=>{
+  try {
+    const token = req.headers.token;
+    
+       const user = await User.findOne({token:token})
+       console.log(user);
+       
+     if (!user) {
+    return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
+     }
+     await User.findByIdAndUpdate(user.id,{
+      $set:{
+        status:user.status =='online'?'offline': 'online'
+      }
+     })
+     await user.save();
+       res.status(200).json({"status":httpStatus.SUCCESS,"data":user});
+
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 const ban =  async(req,res)=>{
   try {
     const token = req.headers.token;
@@ -266,4 +288,4 @@ const inActiveUser = async(req,res)=>{
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
-module.exports = {signUp,login,logout,updateProfile,userInfo,updateNotificationToken,deleteUser,getInActiveUsers,activeUser,getActiveUsers,inActiveUser,ban,disBan}
+module.exports = {signUp,login,logout,updateProfile,userInfo,updateNotificationToken,deleteUser,getInActiveUsers,activeUser,getActiveUsers,inActiveUser,ban,disBan,changeUserStatus}
